@@ -1,6 +1,7 @@
 import os
 import struct
 from array import array
+import numpy as np
 
 class MNIST(object):
     def __init__(self, path='./data/'):
@@ -71,8 +72,8 @@ class MNIST(object):
         assert len(train_img) == len(train_label)
         assert len(train_img) == 60000
         print 'Showing num:%d' % train_label[0]
-        print self.display(train_img[0])
-        self.write2file(train_img)
+        #print self.display(train_img[0])
+        self.displayPlot(train_img[0])
         print
         return True
 
@@ -100,6 +101,19 @@ class MNIST(object):
             else:
                 render += '0'
         return render
+
+    @classmethod
+    def displayPlot(cls, img, width=28):
+        import matplotlib.pyplot as plt
+        grid = []
+        for ii in range(0, width):
+            grid.insert(0, img[ii*width:ii*width+width-1])
+        input_grid = np.array(grid, np.float)
+        plt.pcolor(input_grid)
+        plt.yticks(np.arange(0,29))
+        plt.xticks(np.arange(0,29))
+        plt.show()
+
 
 if __name__ == "__main__":
     print 'Testing'
