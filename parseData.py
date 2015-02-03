@@ -71,10 +71,9 @@ class MNIST(object):
         assert len(test_img) == 10000
         assert len(train_img) == len(train_label)
         assert len(train_img) == 60000
-        print 'Showing num:%d' % train_label[0]
+        print 'Showing num:%d' % train_label[2]
         #print self.display(train_img[0])
-        self.displayPlot(train_img[0])
-        print
+        self.displayPlot(train_img[2])
         return True
 
     def conv2binary(self, img):
@@ -109,7 +108,7 @@ class MNIST(object):
         for ii in range(0, width):
             grid.insert(0, img[ii*width:ii*width+width-1])
         input_grid = np.array(grid, np.float)
-        plt.pcolor(input_grid)
+        plt.pcolor(input_grid, cmap=plt.cm.GnBu)
         plt.yticks(np.arange(0,29))
         plt.xticks(np.arange(0,29))
         plt.show()
