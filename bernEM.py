@@ -8,6 +8,7 @@ with Bernoulli likelihood.
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
+from MNIST import MNIST
 
 SEED = 483982
 PRNG = np.random.RandomState(SEED)
@@ -29,12 +30,14 @@ def _indices(a, func):
 
 def em(observations, cont_tol, iterations):
 	[N, D] = observations.shape
+	print N, D
 	iteration = 1
 	delta_change = 9999
 
 	# Init Model
-	pi = [.5, .5]
-	mu = [[.5, .5, .5, .5], [.9, .1, .1, .9]]
+	pi = np.random.rand(K)
+	#mu = [[.5, .5, .5, .5], [.9, .1, .1, .9]]
+	mu = np.random.rand(K, D)
 	r = np.zeros([N, K]) # soft assignment
 	weight = np.zeros(K)
 
@@ -73,7 +76,7 @@ def em(observations, cont_tol, iterations):
 def main():
 	num_feat = 4
 	num_sample = 1000
-	cont_tol = 1e-6
+	cont_tol = 1e-5
 	max_iter = 1000
 
 	# GLOBAL PARAMS
@@ -86,6 +89,18 @@ def main():
 	# Run EM
 	[mu_est, pi_est, iterations] = em(observations, cont_tol, max_iter)
 
+	# dataset = MNIST()
+	# dataset.load_training()
+	# train = dataset.train_images
+	# train_labels = dataset.train_labels
+	# train = train[0:100]
+	# train_labels = train_labels[0:100]
+	
+	# train = np.array(train)
+	# for ii in range(len(train)):
+	# 	train[ii] = dataset.conv2binary(train[ii])
+
+	# [mu_est, pi_est, iterations] = em(train, cont_tol, max_iter)
 
 	print 'mu', mu_est
 	print 'pi', pi_est
